@@ -1,4 +1,4 @@
-# DomainLens Recon Tool
+# DomainLens - Domain Recon Toolkit
 
 ```text
 
