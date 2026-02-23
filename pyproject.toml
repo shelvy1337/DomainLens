@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "domainlens"
+version = "0.1.0"
+description = "DomainLens - Passive domain reconnaissance CLI tool"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+
+authors = [
+  { name = "shelvy" }
+]
+
+dependencies = [
+  "requests>=2.32.0",
+  "dnspython>=2.6.0",
+  "rich>=13.0.0",
+  "jinja2>=3.1.0"
+]
+
+keywords = ["cybersecurity","recon","osint","dns","tls","security"]
+
+[project.scripts]
+domainlens = "domainlens.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
