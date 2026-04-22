@@ -1,0 +1,185 @@
+{
+  "tool": "DomainLens",
+  "version": "0.1.0",
+  "generated_at": "####",
+  "domain": "example.com",
+  "security": {
+    "score": 50,
+    "posture": "Fair",
+    "breakdown": {
+      "https": {
+        "max": 25,
+        "got": 25
+      },
+      "tls": {
+        "max": 25,
+        "got": 25
+      },
+      "headers": {
+        "max": 50,
+        "got": 0
+      }
+    }
+  },
+  "dns": {
+    "A": [
+      "104.20.23.154",
+      "172.66.147.243"
+    ],
+    "AAAA": [
+      "2606:4700:10::ac42:93f3",
+      "2606:4700:10::6814:179a"
+    ],
+    "CNAME": [],
+    "MX": [
+      "0 ."
+    ],
+    "TXT": [
+      "\"v=spf1 -all\"",
+      "\"_k2n1y4vw3qtb4skdx9e7dxt97qrmmq9\""
+    ],
+    "NS": [
+      "hera.ns.cloudflare.com.",
+      "elliott.ns.cloudflare.com."
+    ]
+  },
+  "http": {
+    "http": {
+      "ok": true,
+      "final_url": "http://example.com/",
+      "status_code": 200,
+      "redirect_chain": [
+        {
+          "url": "http://example.com/",
+          "status": 200
+        }
+      ],
+      "response_time_ms": 21,
+      "server": "cloudflare",
+      "security_headers": {
+        "strict-transport-security": null,
+        "content-security-policy": null,
+        "x-frame-options": null,
+        "x-content-type-options": null,
+        "referrer-policy": null,
+        "permissions-policy": null
+      }
+    },
+    "https": {
+      "ok": true,
+      "final_url": "https://example.com/",
+      "status_code": 200,
+      "redirect_chain": [
+        {
+          "url": "https://example.com/",
+          "status": 200
+        }
+      ],
+      "response_time_ms": 49,
+      "server": "cloudflare",
+      "security_headers": {
+        "strict-transport-security": null,
+        "content-security-policy": null,
+        "x-frame-options": null,
+        "x-content-type-options": null,
+        "referrer-policy": null,
+        "permissions-policy": null
+      }
+    },
+    "robots_txt": {
+      "exists": false,
+      "status": 404,
+      "final_url": "https://example.com/robots.txt"
+    },
+    "sitemap_xml": {
+      "exists": false,
+      "status": 404,
+      "final_url": "https://example.com/sitemap.xml"
+    }
+  },
+  "headers_audit": {
+    "score": 0,
+    "max_score": 60,
+    "details": {
+      "strict-transport-security": {
+        "status": "missing",
+        "value": null
+      },
+      "content-security-policy": {
+        "status": "missing",
+        "value": null
+      },
+      "x-frame-options": {
+        "status": "missing",
+        "value": null
+      },
+      "x-content-type-options": {
+        "status": "missing",
+        "value": null
+      },
+      "referrer-policy": {
+        "status": "missing",
+        "value": null
+      },
+      "permissions-policy": {
+        "status": "missing",
+        "value": null
+      }
+    }
+  },
+  "tls": {
+    "ok": true,
+    "issuer": "countryName=US, organizationName=CLOUDFLARE, INC., commonName=Cloudflare TLS Issuing ECC CA 1",
+    "expires_at": "2026-07-01T21:24:46+00:00",
+    "days_left": 70,
+    "sans": [
+      "*.example.com",
+      "example.com"
+    ]
+  },
+  "subdomains": null,
+  "findings": [
+    {
+      "severity": "medium",
+      "title": "HTTP does not clearly redirect to HTTPS",
+      "description": "The HTTP endpoint is reachable but no redirect to HTTPS was detected.",
+      "recommendation": "Redirect all HTTP traffic to HTTPS."
+    },
+    {
+      "severity": "medium",
+      "title": "Missing Content-Security-Policy",
+      "description": "No CSP header was detected.",
+      "recommendation": "Deploy a Content-Security-Policy to reduce XSS and injection risk."
+    },
+    {
+      "severity": "medium",
+      "title": "Missing HSTS header",
+      "description": "Strict-Transport-Security is not present.",
+      "recommendation": "Add Strict-Transport-Security to enforce HTTPS in browsers."
+    },
+    {
+      "severity": "medium",
+      "title": "Missing X-Frame-Options",
+      "description": "The site does not explicitly restrict framing.",
+      "recommendation": "Add X-Frame-Options: SAMEORIGIN or use CSP frame-ancestors."
+    },
+    {
+      "severity": "low",
+      "title": "Missing Permissions-Policy",
+      "description": "No Permissions-Policy header was detected.",
+      "recommendation": "Add a Permissions-Policy header to disable unused browser features."
+    },
+    {
+      "severity": "low",
+      "title": "Missing Referrer-Policy",
+      "description": "No Referrer-Policy header was detected.",
+      "recommendation": "Add a Referrer-Policy header appropriate for your app."
+    },
+    {
+      "severity": "low",
+      "title": "Missing X-Content-Type-Options",
+      "description": "The site does not explicitly disable MIME sniffing.",
+      "recommendation": "Add X-Content-Type-Options: nosniff."
+    }
+  ]
+}

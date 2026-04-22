@@ -19,37 +19,56 @@ It collects key information about a domain and exports it into clean, readable r
 
 ---
 
-## ✨ Features
-- **DNS recon** (A/AAAA/CNAME/MX/TXT/NS)
-- **HTTP/HTTPS checks**
-  - status code + redirect chain
-  - response time
-  - robots.txt & sitemap.xml detection
-- **Security headers audit**
-  - HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
-- **TLS certificate info**
-  - issuer, expiry date, SANs
-- **Passive subdomain discovery**
-  - crt.sh (certificate transparency logs)
-- **Report output**
-  - Markdown (`report.md`)
-  - JSON (`report.json`)
+## 🔎 Overview
+
+The tool focuses on collecting and organizing publicly available data about a domain.
+It does not perform exploitation or intrusive scanning.
 
 ---
 
-## 📦 Installation
+## 🧩 Functionality
 
-### Option 1: Install from source
+- DNS records (A, AAAA, CNAME, MX, TXT, NS)
+- HTTP / HTTPS checks
+  - status code
+  - redirect chain
+  - response time
+  - server header
+- robots.txt and sitemap.xml detection
+- selected HTTP security headers
+- TLS certificate details
+  - issuer
+  - expiry date
+  - subject alternative names
+- optional subdomain lookup using crt.sh
+
+---
+
+## ⚙️ Installation
+
+From source:
 ```bash
 git clone https://github.com/shelvy1337/domainlens.git
 cd domainlens
+pip install -e .
+```
+
+Alternatively:
+```bash
 pip install -r requirements.txt
 ```
 
-### Option 2: Run directly
-```bash
-python -m domainlens example.com
-```
+---
+
+## 📊 Analysis
+
+DomainLens includes a simple evaluation layer based on collected data:
+- basic security score (0–100)
+- header presence checks
+- detection of common configuration issues
+- list of findings with severity levels and short recommendations
+
+This is meant as a quick overview, not a full security assessment.
 
 ---
 
@@ -60,28 +79,39 @@ Basic scan:
 domainlens example.com
 ```
 
-Save reports to a folder:
+Full scan:
+```bash
+domainlens example.com --all
+```
+
+Custom output directory:
 ```bash
 domainlens example.com --out reports/
 ```
 
-Generate both Markdown and JSON:
-```bash
-domainlens example.com --md --json
-```
-
-Enable subdomain discovery:
+Enable subdomain lookup:
 ```bash
 domainlens example.com --subdomains
 ```
 
 ---
 
-## 📝 Example Output
+## 📁 Output
 
-DomainLens generates:
-- `reports/example.com/report.md`
-- `reports/example.com/report.json`
+Results are written to:
+- `report.json` – structured output  
+- `report.md` – readable report  
+
+Example:
+```
+reports/example.com/report.json
+reports/example.com/report.md
+```
+
+---
+
+## 📌 Requirements
+* Python 3.10+
 
 ---
 

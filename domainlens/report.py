@@ -1,10 +1,11 @@
 import json
 from pathlib import Path
+
 from jinja2 import Template
 
 
 REPORT_TEMPLATE = r"""
-# DomainLens Report — {{ domain }}
+# DomainLens Report - {{ domain }}
 
 Generated: **{{ generated_at }}**
 
@@ -12,15 +13,34 @@ Generated: **{{ generated_at }}**
 
 ## Summary
 - Domain: `{{ domain }}`
+- Security posture: **{{ security.score }}/100 ({{ security.posture }})**
 - HTTPS reachable: **{{ "Yes" if http.https.ok else "No" }}**
 - HTTP reachable: **{{ "Yes" if http.http.ok else "No" }}**
 - TLS cert: **{{ "OK" if tls.ok else "Unavailable" }}**
 - Subdomains found: **{{ subdomains.count if subdomains else "N/A" }}**
 
+### Score Breakdown
+- HTTPS: **{{ security.breakdown.https.got }}/{{ security.breakdown.https.max }}**
+- TLS: **{{ security.breakdown.tls.got }}/{{ security.breakdown.tls.max }}**
+- Headers: **{{ security.breakdown.headers.got }}/{{ security.breakdown.headers.max }}**
+
+---
+
+## Findings
+{% if findings and findings|length > 0 %}
+{% for item in findings %}
+### [{{ item.severity|upper }}] {{ item.title }}
+- Description: {{ item.description }}
+- Recommendation: {{ item.recommendation }}
+
+{% endfor %}
+{% else %}
+- No findings generated.
+{% endif %}
+
 ---
 
 ## DNS Records
-
 {% for rtype, values in dns.items() %}
 ### {{ rtype }}
 {% if values and values|length > 0 %}
@@ -30,6 +50,7 @@ Generated: **{{ generated_at }}**
 {% else %}
 - (none)
 {% endif %}
+
 {% endfor %}
 
 ---
@@ -41,7 +62,9 @@ Generated: **{{ generated_at }}**
 - Status: **{{ http.https.status_code }}**
 - Final URL: {{ http.https.final_url }}
 - Response time: {{ http.https.response_time_ms }} ms
-{% if http.https.server %}- Server: {{ http.https.server }}{% endif %}
+{% if http.https.server %}
+- Server: {{ http.https.server }}
+{% endif %}
 
 Redirect chain:
 {% for hop in http.https.redirect_chain %}
@@ -56,6 +79,9 @@ Redirect chain:
 - Status: **{{ http.http.status_code }}**
 - Final URL: {{ http.http.final_url }}
 - Response time: {{ http.http.response_time_ms }} ms
+{% if http.http.server %}
+- Server: {{ http.http.server }}
+{% endif %}
 
 Redirect chain:
 {% for hop in http.http.redirect_chain %}
@@ -73,7 +99,6 @@ Redirect chain:
 {% else %}
 - robots.txt: N/A
 {% endif %}
-
 {% if http.sitemap_xml %}
 - sitemap.xml: **{{ "FOUND" if http.sitemap_xml.exists else "NOT FOUND" }}** ({{ http.sitemap_xml.status if http.sitemap_xml.status else "?" }})
 {% else %}
@@ -85,9 +110,8 @@ Redirect chain:
 ## Security Headers Audit
 {% if headers_audit %}
 Score: **{{ headers_audit.score }} / {{ headers_audit.max_score }}**
-
 {% for h, info in headers_audit.details.items() %}
-- **{{ h }}**: {{ info.status }}
+- **{{ h }}**: {{ info.status }}{% if info.value %} → `{{ info.value }}`{% endif %}
 {% endfor %}
 {% else %}
 - N/A
@@ -119,11 +143,9 @@ Score: **{{ headers_audit.score }} / {{ headers_audit.max_score }}**
 {% if subdomains %}
 {% if subdomains.ok %}
 Found: **{{ subdomains.count }}**
-
 {% for s in subdomains.subdomains[:200] %}
 - {{ s }}
 {% endfor %}
-
 {% if subdomains.count > 200 %}
 > Showing first 200 results.
 {% endif %}

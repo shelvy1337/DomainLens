@@ -1,38 +1,53 @@
+import time
 import requests
 
 
-def crtsh_subdomains(domain: str, timeout: int = 10) -> dict:
+def crtsh_subdomains(domain: str, timeout: int = 10, retries: int = 2, retry_delay: float = 1.5) -> dict:
     """
-    Passive subdomain discovery via crt.sh
+    Passive subdomain discovery via crt.sh with simple retry handling.
     """
     url = f"https://crt.sh/?q=%25.{domain}&output=json"
+    headers = {"User-Agent": "DomainLens/0.1 (Passive Recon Tool)"}
 
-    try:
-        r = requests.get(
-            url,
-            timeout=timeout,
-            headers={"User-Agent": "DomainLens/0.1 (Passive Recon Tool)"},
-        )
-        r.raise_for_status()
+    last_error = None
 
-        data = r.json()
+    for attempt in range(retries + 1):
+        try:
+            r = requests.get(url, timeout=timeout, headers=headers)
+            r.raise_for_status()
 
-        subs = set()
-        for row in data:
-            name = row.get("name_value", "")
-            if not name:
-                continue
+            data = r.json()
 
-            # crt.sh can return multiple names separated by newlines
-            for part in name.splitlines():
-                part = part.strip().lower()
-                if part.endswith(domain):
-                    part = part.lstrip("*.")  # remove wildcard
-                    subs.add(part)
+            subs = set()
+            for row in data:
+                name = row.get("name_value", "")
+                if not name:
+                    continue
 
-        subs = sorted(subs)
+                for part in name.splitlines():
+                    part = part.strip().lower()
+                    if part.endswith(domain):
+                        part = part.lstrip("*.")
+                        subs.add(part)
 
-        return {"ok": True, "count": len(subs), "subdomains": subs}
+            subs = sorted(subs)
 
-    except Exception as e:
-        return {"ok": False, "error": str(e), "count": 0, "subdomains": []}
+            return {
+                "ok": True,
+                "count": len(subs),
+                "subdomains": subs,
+                "source": "crt.sh",
+            }
+
+        except Exception as e:
+            last_error = str(e)
+            if attempt < retries:
+                time.sleep(retry_delay)
+
+    return {
+        "ok": False,
+        "error": last_error,
+        "count": 0,
+        "subdomains": [],
+        "source": "crt.sh",
+    }
