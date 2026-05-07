@@ -1,7 +1,7 @@
 # DomainLens
 
 <p align="center">
-  <img src="assets/DomainLens.png" alt="DomainLens Logo" width="700" style="background: white;">
+  <img src="assets/DomainLens.png" alt="DomainLens Logo" width="100%" style="background: white;">
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.10+-blue">
