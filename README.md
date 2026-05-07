@@ -1,17 +1,14 @@
 # DomainLens - Domain Recon Toolkit
 
-```text
+<p align="center">
+  <img src="assets/logo.png" alt="DomainLens Logo" width="700">
+</p>
+<p align="center">
+  <img src="https://img.shields.io/badge/python-3.10+-blue">
+  <img src="https://img.shields.io/badge/status-stable-green">
+  <img src="https://img.shields.io/badge/license-GPL--3.0-blue">
+</p>
 
-$$$$$$$\                                    $$\           $$\                                    
-$$  __$$\                                   \__|          $$ |                                   
-$$ |  $$ | $$$$$$\  $$$$$$\$$$$\   $$$$$$\  $$\ $$$$$$$\  $$ |      $$$$$$\  $$$$$$$\   $$$$$$$\ 
-$$ |  $$ |$$  __$$\ $$  _$$  _$$\  \____$$\ $$ |$$  __$$\ $$ |     $$  __$$\ $$  __$$\ $$  _____|
-$$ |  $$ |$$ /  $$ |$$ / $$ / $$ | $$$$$$$ |$$ |$$ |  $$ |$$ |     $$$$$$$$ |$$ |  $$ |\$$$$$$\  
-$$ |  $$ |$$ |  $$ |$$ | $$ | $$ |$$  __$$ |$$ |$$ |  $$ |$$ |     $$   ____|$$ |  $$ | \____$$\ 
-$$$$$$$  |\$$$$$$  |$$ | $$ | $$ |\$$$$$$$ |$$ |$$ |  $$ |$$$$$$$$\\$$$$$$$\ $$ |  $$ |$$$$$$$  |
-\_______/  \______/ \__| \__| \__| \_______|\__|\__|  \__|\________|\_______|\__|  \__|\_______/
-
-```
 Generate a full domain recon report: DNS, TLS certificate, security headers, redirects and subdomains.
 
 DomainLens is a lightweight **passive reconnaissance** CLI tool designed for defenders, students and authorized security testing.  
