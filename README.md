@@ -1,7 +1,7 @@
 # DomainLens - Domain Recon Toolkit
 
 <p align="center">
-  <img src="assets/logo.png" alt="DomainLens Logo" width="700">
+  <img src="assets/DomainLens.png" alt="DomainLens Logo" width="700">
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.10+-blue">
