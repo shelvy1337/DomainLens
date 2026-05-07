@@ -6,7 +6,7 @@
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.10+-blue">
   <img src="https://img.shields.io/badge/status-stable-green">
-  <img src="https://img.shields.io/badge/license-GPL--3.0-blue">
+  <img src="https://img.shields.io/badge/license-MIT-green">
 </p>
 
 Collects basic domain data and generates structured reports.
