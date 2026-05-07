@@ -1,7 +1,7 @@
-# DomainLens - Domain Recon Toolkit
+# DomainLens
 
 <p align="center">
-  <img src="assets/DomainLens.png" alt="DomainLens Logo" width="700">
+  <img src="assets/DomainLens.png" alt="DomainLens Logo" width="700" style="background: white;">
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/python-3.10+-blue">
@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/license-GPL--3.0-blue">
 </p>
 
-Generate a full domain recon report: DNS, TLS certificate, security headers, redirects and subdomains.
+Collects basic domain data and generates structured reports.
 
 DomainLens is a lightweight **passive reconnaissance** CLI tool designed for defenders, students and authorized security testing.  
 It collects key information about a domain and exports it into clean, readable reports.
